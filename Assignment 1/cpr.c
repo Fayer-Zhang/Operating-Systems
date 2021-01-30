@@ -17,6 +17,10 @@ Explanation of the zombie process
 ------------------------------------------------------------- */
 #include <stdio.h>
 #include <sys/select.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <stdlib.h>
 
 /* Prototype */
 void createChildAndRead (int);
@@ -67,6 +71,58 @@ void createChildAndRead(int prcNum)
 
  /* Please complete this function according to the
 Assignment instructions. */
+
+	int result;
+	int fd[2];  //fd[0] read pipe, fd[1] write pipe
+	pid_t pid;
+	char buff[32];
+
+	int buffSize = strlen(buff);
+	int *read_fd = &fd[0];
+	int *write_fd = &fd[1];
+	
+	/* Pipe */
+	result = pipe(fd[2]);
+	if (result = -1)
+	{
+		fprintf(stderr, "Fail to create pipe.\n");
+	}
+
+
+	if (prcNum < 1)
+	{
+		fprintf(stderr, "Input should be a positive number, please enter again.\n");
+	}
+
+	else if (prcNum == 1)
+	{
+		sprintf(buff, "Process %d begins\n", prcNum);
+		write(1, buff, buffSize);
+		sleep(5);
+		sprintf(buff, "Process %d ends\n", prcNum);
+		write(1, buff, buffSize);
+	}
+
+	else
+	{
+		sprintf(buff, "Process %d begins\n", prcNum);
+		write(1, buff, buffSize);
+		
+		pid = fork();
+
+		if (pid == -1)
+		{
+			fprintf(stderr, "Fail to fork.\n");
+		}
+
+		else if (pid == 0)
+		{
+			close(*read_fd);
+			//dup2();
+		}
+
+	}
+	
 }
 
 
