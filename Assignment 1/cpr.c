@@ -15,7 +15,12 @@ Description: This program contains the code for creation
 Explanation of the zombie process
 (point 5 of "To be completed" in the assignment):
 
-	(please complete this part);
+ In linux, a child process should notify its parent process once it has completed its execution and has exited. 
+ Then the parent process will get the notification and it would remove the process from process table. 
+ However, if the parent process is unable to read the process status from its child process which the child process has executed,
+ it won’t be able to remove the process from memory. As a result, the process being dead still present in the process table.
+ This is called zombine process.
+ In other words,zombie process is a process which it has already finished the execution but still has entry in the process table.
 
 ------------------------------------------------------------- */
 #include <stdio.h>
