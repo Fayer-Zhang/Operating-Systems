@@ -86,19 +86,20 @@ Assignment instructions. */
 
 	int result, pid;
 	int fd[2];			//fd[0] read, fd[1] write
-	char buff[32];
+
+	char *buff = (char*)malloc(32 * sizeof(char));  // memory in heap 
 
 	int *read_fd = &fd[0];
 	int *write_fd = &fd[1];
-	
+
 	/* Pipe */
 	result = pipe(fd);
+
 	if (result == -1)
 	{
 		fprintf(stderr, "Fail to create pipe.\n");
 		exit(-1);
 	}
-
 
 	if (prcNum < 1)
 	{
@@ -106,7 +107,6 @@ Assignment instructions. */
 		fflush(stdout);
 		exit(-1);
 	}
-
 	else if (prcNum == 1)
 	{
 		sprintf(buff, "Process %d begins\n", prcNum);
@@ -116,12 +116,11 @@ Assignment instructions. */
 		write(1, buff, strlen(buff));
 		sleep(10);
 	}
-
 	else
 	{
 		sprintf(buff, "Process %d begins\n", prcNum);
 		write(1, buff, strlen(buff));
-		
+
 		pid = fork();
 
 		if (pid < 0)
@@ -130,9 +129,10 @@ Assignment instructions. */
 			exit(-1);
 		}
 
-		/* Child */
-		else if (pid == 0)
+
+		if (pid == 0)
 		{
+			// child process
 			close(*write_fd);
 			dup2(*write_fd, 1);
 
@@ -140,18 +140,19 @@ Assignment instructions. */
 			sprintf(output, "%d", prcNum - 1);
 			execlp(args[0], args[0], output, NULL);
 		}
-
-		/* Parent */
 		else
 		{
+			// parent process
 			close(*write_fd);
-			memset(buff, 0, sizeof(buff));
 
-			read(*read_fd, buff, strlen(buff));
-			write(1, buff, strlen(buff));
+			memset(buff, 0, sizeof(buff));  //clear memory
 
-			wait(NULL);
-			memset(buff, 0, sizeof(buff));
+			read(*read_fd, buff, strlen(buff));  // read from pipe
+			write(1, buff, strlen(buff));        // write in pipe
+
+			wait(0);
+
+			memset(buff, 0, sizeof(buff));  //clear memory
 
 			sprintf(buff, "Process %d ends\n", prcNum);
 			write(1, buff, strlen(buff));
@@ -161,7 +162,7 @@ Assignment instructions. */
 		}
 
 	}
-	
+
 }
 
 
