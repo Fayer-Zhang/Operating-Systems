@@ -1,16 +1,6 @@
-/**
- * CSI 3131 
- * 
- * Assignment 4, Question 3
- * Last name: Xu
- * Student number #: 7881937
- * 
- * Last name: Zhang
- * Student number #: 8589976
- * 
+/*
  * Description: This program contains the code for generate
- * the Catalan sequence and write it to a shared memory object
- * 
+ * the Catalan sequence and write it to a shared memory object 
  */
 
 

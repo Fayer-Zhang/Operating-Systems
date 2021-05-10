@@ -1,13 +1,3 @@
-/**
- * 
- * Student Last Name: Xu
- * Student Number: 7881937
- * 
- * Student Last Name: Zhang
- * Student Number 8589976
- * 
- */
-
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>

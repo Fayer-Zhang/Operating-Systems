@@ -1,9 +1,3 @@
-/* 
- * Assignmemt 4 - Question 2
- * Student #1: Feier Zhang, 8589976
- * Student #2: Jiajie Xu, 7881937   
- */
-
 import java.util.Arrays;
 import java.util.Scanner;
 
